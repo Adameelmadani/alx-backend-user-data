@@ -29,7 +29,6 @@ class Auth:
                 return False
         return True
 
-
     def authorization_header(self, request=None) -> str:
         """
         authorization_header function to return the author header
