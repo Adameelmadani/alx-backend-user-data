@@ -16,9 +16,19 @@ class Auth:
     """
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """
-        require_auth function to check for authentication
+        require_auth function to check if path is in the require_auth paths
         """
-        return False
+        if path is None:
+            return True
+        elif excluded_paths is None:
+            return True
+        elif len(excluded_paths) == 0:
+            return True
+        for e_path in excluded_paths:
+            if path == e_path or path == e_path[:-1]:
+                return False
+        return True
+
 
     def authorization_header(self, request=None) -> str:
         """
