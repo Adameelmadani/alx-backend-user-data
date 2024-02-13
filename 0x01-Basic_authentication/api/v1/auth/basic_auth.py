@@ -12,14 +12,14 @@ class BasicAuth(Auth):
     """
     BasicAuth class that inherits from Auth class
     """
-    def extract_base64_authorization_header(self, authorization_header: str) -> str:
+    def extract_base64_authorization_header(self, auth_header: str) -> str:
         """
         function that extract the base64 authorization header
         """
-        if authorization_header is None:
+        if auth_header is None:
             return None
-        elif not isinstance(authorization_header, str):
+        elif not isinstance(auth_header, str):
             return None
-        elif not authorization_header.startswith("Basic "):
+        elif not auth_header.startswith("Basic "):
             return None
-        return authorization_header[6:]
+        return auth_header[6:]
