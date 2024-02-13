@@ -4,9 +4,12 @@ This python module contains BasicAuth class
 """
 from api.v1.auth.auth import Auth
 import base64
+from models.user import User
+from typing import TypeVar
 """
 Auth class from auth module
 base64 module
+typing module
 """
 
 
@@ -52,3 +55,20 @@ class BasicAuth(Auth):
             return (None, None)
         user_inf_list = dec_b64_auth_header.split(":")
         return (user_inf_list[0], user_inf_list[1])
+
+    def user_object_from_credentials(self, user_email: str, user_pwd: str
+                                     ) -> TypeVar('User'):
+        """
+        function that returns user object from email and pwd
+        """
+        if user_email is None or (not isinstance(user_email, str)):
+            return None
+        if user_pwd is None or (not isinstance(user_pwd, str)):
+            return None
+        user_list = User.search({'email': user_email})
+        if len(user_list) == 0:
+            return None
+        user = user_list[0]
+        if user.is_valid_password(user_pwd) is False:
+            return None
+        return user
